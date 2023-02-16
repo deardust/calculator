@@ -10,15 +10,16 @@ import (
 )
 
 func TestAdd(t *testing.T) {
-	calc := newCalculator()
-	calc.loadUI(test.NewApp())
+	calc := newCalculator()    //创建一个新的计算器
+	calc.loadUI(test.NewApp()) //加载UI
 
+	// test.Tap()模拟用户点击
 	test.Tap(calc.buttons["1"])
 	test.Tap(calc.buttons["+"])
 	test.Tap(calc.buttons["1"])
 	test.Tap(calc.buttons["="])
 
-	assert.Equal(t, "2", calc.output.Text)
+	assert.Equal(t, "2", calc.output.Text) //断言
 }
 
 func TestSubtract(t *testing.T) {
@@ -119,7 +120,7 @@ func TestKeyboard(t *testing.T) {
 	calc := newCalculator()
 	calc.loadUI(test.NewApp())
 
-	test.TypeOnCanvas(calc.window.Canvas(), "1+1")
+	test.TypeOnCanvas(calc.window.Canvas(), "1+1") //模拟用户输入
 	assert.Equal(t, "1+1", calc.output.Text)
 
 	test.TypeOnCanvas(calc.window.Canvas(), "=")
@@ -134,13 +135,13 @@ func TestKeyboard_Buttons(t *testing.T) {
 	calc.loadUI(test.NewApp())
 
 	test.TypeOnCanvas(calc.window.Canvas(), "1+1")
-	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyReturn})
+	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyReturn}) //模拟用户按下回车键
 	assert.Equal(t, "2", calc.output.Text)
 
 	test.TypeOnCanvas(calc.window.Canvas(), "c")
 
 	test.TypeOnCanvas(calc.window.Canvas(), "1+1")
-	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyEnter})
+	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyEnter}) //模拟用户按下回车键
 	assert.Equal(t, "2", calc.output.Text)
 }
 
@@ -148,17 +149,17 @@ func TestKeyboard_Backspace(t *testing.T) {
 	calc := newCalculator()
 	calc.loadUI(test.NewApp())
 
-	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace})
+	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace}) //模拟用户按下退格键
 	assert.Equal(t, "", calc.output.Text)
 
 	test.TypeOnCanvas(calc.window.Canvas(), "1/2")
-	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace})
+	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace}) //模拟用户按下退格键
 	assert.Equal(t, "1/", calc.output.Text)
 
-	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyEnter})
+	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyEnter}) //模拟用户按下回车键
 	assert.Equal(t, "error", calc.output.Text)
 
-	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace})
+	calc.onTypedKey(&fyne.KeyEvent{Name: fyne.KeyBackspace}) //模拟用户按下退格键
 	assert.Equal(t, "", calc.output.Text)
 }
 
@@ -188,7 +189,7 @@ func TestShortcuts(t *testing.T) {
 	clipboard := app.Driver().AllWindows()[0].Clipboard()
 
 	test.TypeOnCanvas(calc.window.Canvas(), "720 + 80")
-	calc.onCopyShortcut(&fyne.ShortcutCopy{Clipboard: clipboard})
+	calc.onCopyShortcut(&fyne.ShortcutCopy{Clipboard: clipboard}) //模拟用户按下复制快捷键
 	assert.Equal(t, clipboard.Content(), calc.output.Text)
 
 	test.TypeOnCanvas(calc.window.Canvas(), "+")

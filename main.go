@@ -1,14 +1,15 @@
 //go:generate fyne bundle -o data.go Icon.png
-// Package main launches the calculator app
 package main
 
 import "fyne.io/fyne/v2/app"
 
 func main() {
-	app := app.New()
-	app.SetIcon(resourceIconPng)
+	app := app.New()             // create a new app
+	app.SetIcon(resourceIconPng) // set the app icon
 
-	c := newCalculator()
-	c.loadUI(app)
-	app.Run()
+	c := newCalculator() // create a new calculator
+	c.loadUI(app)        // load the UI
+
+	app.Run() // run the app
+
 }
